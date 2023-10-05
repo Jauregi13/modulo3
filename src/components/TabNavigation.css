@@ -1,5 +1,12 @@
-.MuiBottomNavigation-root {
+.bottom-navigation {
+
     position: fixed;
     width: 100%;
     bottom: 0;
 }
+
+.bottom-navigation__action{
+    width: 50%;
+    max-width: none;
+}
+

@@ -1,1 +1,14 @@
 
+:root {
+
+    /**---------Colors-----------**/
+
+    --primary-color: #00A6FF;
+    --secondary-color: #008FDC;
+    --success-color: #76FF6A;
+    --warning-color: #EDDD00;
+    --danger-color: #F02323;
+
+    /**------Font Primary---------- **/
+    --font-primary: ''
+}
