@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material"
-import { Favorite, Search } from "@mui/icons-material"
+import { Favorite, Height, Search } from "@mui/icons-material"
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import './TabNavigation.css'
@@ -14,7 +14,7 @@ export const TabNavigation = () => {
     }
 
     return (
-        <BottomNavigation value={value} onChange={handleChange} className="bottom-navigation">
+        <BottomNavigation value={value} onChange={handleChange} className="bottom-navigation" sx={{height: '6vh'}}>
                 <BottomNavigationAction
                     label="Search"
                     value="search"

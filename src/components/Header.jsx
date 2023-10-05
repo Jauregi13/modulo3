@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
+import './Header.css'
 
 export const Header = () => {
     const location = useLocation()
@@ -19,8 +20,8 @@ export const Header = () => {
 
     return (
         <AppBar position="static" className="header">
-            <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Toolbar className="header__content">
+                <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
                     {title}
                 </Typography>
             </Toolbar>
