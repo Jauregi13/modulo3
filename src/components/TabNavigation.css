@@ -1,6 +1,7 @@
 .bottom-navigation {
 
     position: fixed;
+    height: 6vh;
     width: 100%;
     bottom: 0;
 }

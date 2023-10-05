@@ -1,4 +1,8 @@
 
 .header {
-    background-color: var(--primary-color);
+    height: 7vh;
+}
+
+.header__content {
+    height: 100%;
 }
