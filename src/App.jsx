@@ -17,14 +17,62 @@ const theme = createTheme({
       fontSize: 20,
       fontWeight: 700
     },
+    h2Regular: {
+      fontSize: 20,
+      fontWeight: 400
+    },
     h3: {
       fontSize: 16,
       fontWeight: 700
     },
+    h3Regular: {
+      fontSize: 16,
+      fontWeight: 400
+    },
     h4: {
       fontSize: 10,
       fontWeight: 700
-    }
+    },
+    h1Second: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 32,
+      fontWeight: 700
+    },
+    h2Second: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 20,
+      fontWeight: 700
+    },
+    h2SecondRegular: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 20,
+      fontWeight: 400
+    },
+    h3Second: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 16,
+      fontWeight: 700
+    },
+    h3SecondRegular: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 16,
+      fontWeight: 400
+    },
+    h4Second: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 14,
+      fontWeight: 700
+    },
+    h4SecondRegular: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 14,
+      fontWeight: 400
+    },
+    h5Second: {
+      fontFamily: 'JetBrains Mono',
+      fontSize: 10,
+      fontWeight: 700
+    },
   },
   palette: {
     primary: {
