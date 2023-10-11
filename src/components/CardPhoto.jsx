@@ -4,15 +4,25 @@ import { AddCircle } from '@mui/icons-material'
 
 const CardElement = styled(Card)(() => ({
 
-    borderRadius: '20px'
+    borderRadius: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '12em'
 
 }))
 
 const CardTitle = styled(CardHeader)(({theme}) => ({
 
+    height: '30%',
+
     '& .MuiIconButton-root':{
         color: theme.palette.primary.main
     }
+}))
+
+const CardImage = styled(CardMedia)(() =>({
+
+    height: '70%'
 }))
 
 export default function CardPhoto({sx, title,image}){
@@ -26,10 +36,9 @@ export default function CardPhoto({sx, title,image}){
             action={
                 <IconButton><AddCircle /></IconButton>
             }/>
-            <CardMedia
+            <CardImage
                 component='img'
                 image={image}
-                height='100px'
             />
 
         </CardElement>
