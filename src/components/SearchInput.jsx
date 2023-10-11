@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { InputAdornment, TextField } from '@mui/material'
+import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Search as SearchIcon } from '@mui/icons-material'
 
 
@@ -23,12 +23,13 @@ const SearchComponent = styled(TextField)(({theme, ...props}) =>({
 }))
 
 
-export default function Search({sx, placeholder, ...other}){
+export default function Search({sx, placeholder,name, ...other}){
 
-    return <SearchComponent sx={sx} 
+    return <SearchComponent sx={sx}
+            name={name} 
             placeholder={placeholder} 
             {...other}
             InputProps={{
-                startAdornment: <InputAdornment position='start'><SearchIcon /></InputAdornment>
+                endAdornment: <InputAdornment position='end'><IconButton type='submit'><SearchIcon /></IconButton></InputAdornment>
             }}/>
 }
