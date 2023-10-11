@@ -26,11 +26,11 @@ export default function CardPhoto({sx, title,image}){
             action={
                 <IconButton><AddCircle /></IconButton>
             }/>
-            <CardMedia 
+            <CardMedia
                 component='img'
                 image={image}
-                height='30%'
-                />
+                height='100px'
+            />
 
         </CardElement>
     )
