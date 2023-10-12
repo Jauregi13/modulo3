@@ -2,8 +2,8 @@ import { Box, Container } from "@mui/material"
 import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
-import { useSelector } from "react-redux"
-import { getFavouritePhotos } from "../feature/favouriteSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { getFavouritePhotos, removePhoto } from "../feature/favouriteSlice"
 import { useEffect, useState } from "react"
 import { format, set } from "date-fns"
 
@@ -11,8 +11,14 @@ import { format, set } from "date-fns"
 
 export const MyPhotos = () => {
 
+    const dispatch = useDispatch()
     const getPhotos = useSelector(getFavouritePhotos)
     const [imageFavourites,setImageFavourites] = useState([])
+
+    const handleRemovePhoto = (image) => {
+
+        dispatch(removePhoto(image))
+    }
 
     useEffect(() => {
 
@@ -40,7 +46,7 @@ export const MyPhotos = () => {
             {
                 imageFavourites.map((image,id) => (
                     <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
-                    likes={image.likes}/>
+                    likes={image.likes} removePhoto={() => handleRemovePhoto(image)}/>
                 ))
             }
         </Container>
