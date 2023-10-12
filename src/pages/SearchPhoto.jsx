@@ -7,6 +7,7 @@ import { getPhotosThunk } from '../feature/Search/SearchThunk';
 import { useEffect, useState } from 'react';
 import { getImages, getSearchError, getSearchStatus } from '../feature/Search/SearchSlice';
 import { AlertMessage } from '../components/AlertMessage';
+import { addPhoto } from '../feature/favouriteSlice';
 
 export const SearchPhoto = () => {
     
@@ -23,6 +24,11 @@ export const SearchPhoto = () => {
         event.preventDefault()
 
         dispatch(getPhotosThunk(event.target.search.value))
+    }
+
+    const handleAddPhoto = (image) => {
+
+        dispatch(addPhoto(image))
     }
 
     useEffect(() => {
@@ -97,9 +103,9 @@ export const SearchPhoto = () => {
                 </Grid>
             ) :  images.length !== 0 ? (
                 <Grid container columnSpacing={1} rowSpacing={2} sx={{width:'95%'}}>
-                    {images.map((image) => (
-                        <Grid item xs={6}>
-                        <CardPhoto sx={{marginLeft:'1.5em'}}  title={image.name} image={image.url}/>
+                    {images.map((image, id) => (
+                        <Grid item xs={6} key={id}>
+                        <CardPhoto sx={{marginLeft:'1.5em'}}  title={image.name} image={image.image_small} addPhoto={() => handleAddPhoto(image)}/>
                         </Grid>
                     ))}
                 </Grid>
@@ -108,7 +114,7 @@ export const SearchPhoto = () => {
              )    
         }
         
-        
+        {}
         
         
         </>

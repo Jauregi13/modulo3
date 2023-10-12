@@ -1,12 +1,24 @@
-import { Box, CardContent, Container, Typography } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
-import CardPhoto from "../components/CardPhoto"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
+import { useSelector } from "react-redux"
+import { getFavouritePhotos } from "../feature/favouriteSlice"
+import { useEffect, useState } from "react"
+import { format, set } from "date-fns"
 
 
 
 export const MyPhotos = () => {
+
+    const getPhotos = useSelector(getFavouritePhotos)
+    const [imageFavourites,setImageFavourites] = useState([])
+
+    useEffect(() => {
+
+        setImageFavourites(getPhotos)
+
+    },[getPhotos])
 
     return (
         <>
@@ -24,9 +36,13 @@ export const MyPhotos = () => {
         </Container>
 
         <Container sx={{width: '80%', marginTop: '1em'}}>
-            <CardPhotoWithInfo title='Paella' img='./src/assets/paella.svg' height='600px' width='1200px' likes='50' date='30 sep, 2023'/>
 
-            <CardPhotoWithInfo title='Paella' img='./src/assets/paella.svg' height='600px' width='1200px' likes='50' date='30 sep, 2023'/>
+            {
+                imageFavourites.map((image,id) => (
+                    <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
+                    likes={image.likes}/>
+                ))
+            }
         </Container>
         
 
