@@ -1,6 +1,8 @@
-import { Box, Container, IconButton, Typography } from "@mui/material"
+import { Box, CardContent, Container, Typography } from "@mui/material"
 import { Tag } from "../components/Tag"
-import { UnfoldMore } from "@mui/icons-material"
+import { OrderBy } from "../components/OrderBy"
+import CardPhoto from "../components/CardPhoto"
+import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 
 
 
@@ -14,23 +16,17 @@ export const MyPhotos = () => {
             <Tag label='Deporte'/>
         </Box>
 
-        <Container sx={{backgroundColor:'#FFFFFF', width:'80%', borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282'}}>
-            <Box sx={{display:'inline-block', marginLeft:'2%'}}>
-                <Typography variant="h5Second">Height</Typography>
-                <IconButton><UnfoldMore /></IconButton>
-            </Box>
-            <Box sx={{display:'inline-block'}}>
-                <Typography variant="h5Second">Width</Typography>
-                <IconButton><UnfoldMore sx={{borderRadius:'1px solid blue'}}/></IconButton>
-            </Box>
-            <Box sx={{display:'inline-block'}}>
-                <Typography variant="h5Second">Likes</Typography>
-                <IconButton><UnfoldMore /></IconButton>
-            </Box>
-            <Box sx={{display:'inline-block'}}>
-                <Typography variant="h5Second">Date</Typography>
-                <IconButton><UnfoldMore /></IconButton>
-            </Box>
+        <Container sx={{backgroundColor:'#FFFFFF', width:'80%', borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex'}}>
+            <OrderBy title='Height'/>
+            <OrderBy title='Width' />
+            <OrderBy title='Likes' />
+            <OrderBy title='Date' />
+        </Container>
+
+        <Container sx={{width: '80%', marginTop: '1em'}}>
+            <CardPhotoWithInfo title='Paella' img='./src/assets/paella.svg' height='600px' width='1200px' likes='50' date='30 sep, 2023'/>
+
+            <CardPhotoWithInfo title='Paella' img='./src/assets/paella.svg' height='600px' width='1200px' likes='50' date='30 sep, 2023'/>
         </Container>
         
 
