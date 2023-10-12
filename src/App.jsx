@@ -101,7 +101,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='*' element={<Root />}/>
     <Route path='searchPhotos' element={<SearchPhoto />}/>
     <Route path='myPhotos' element={<MyPhotos />} />
-    <Route path='' element={<Navigate to='/searchPhotos'/>}/>
+    <Route path='' element={<Navigate to='searchPhotos'/>}/>
   </Route>
 ))
 

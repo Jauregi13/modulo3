@@ -1,5 +1,5 @@
-import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material"
-import { Favorite, Height, Search } from "@mui/icons-material"
+import { BottomNavigation, BottomNavigationAction } from "@mui/material"
+import { Favorite, Search } from "@mui/icons-material"
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import './TabNavigation.css'
@@ -20,7 +20,7 @@ export const TabNavigation = () => {
                     value="search"
                     icon={<Search />}
                     LinkComponent={NavLink}
-                    to='/searchPhotos'
+                    to='searchPhotos'
                     className="bottom-navigation__action"
                     
                 />
@@ -30,7 +30,7 @@ export const TabNavigation = () => {
                     value="myPhotos"
                     icon={<Favorite />}
                     LinkComponent={NavLink}
-                    to='/myPhotos'
+                    to='myPhotos'
                     className="bottom-navigation__action"
                     
                 />
