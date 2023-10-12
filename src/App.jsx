@@ -8,7 +8,10 @@ import { ThemeProvider, createTheme } from '@mui/material'
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Istok Web',
+    fontFamily: {
+      primary: 'Istok Web',
+      secondary: 'JetBrains'
+    },
     h1: {
       fontSize: 32,
       fontWeight: 700
