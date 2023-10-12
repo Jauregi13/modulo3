@@ -17,7 +17,6 @@ export const MyPhotos = () => {
     useEffect(() => {
 
         setImageFavourites(getPhotos)
-        console.log(getPhotos);
 
     },[getPhotos])
 
@@ -39,8 +38,8 @@ export const MyPhotos = () => {
         <Container sx={{width: '80%', marginTop: '1em'}}>
 
             {
-                imageFavourites.map((image) => (
-                    <CardPhotoWithInfo title={image.name} img={image.image_small} height={image.height} width={image.width} 
+                imageFavourites.map((image,id) => (
+                    <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
                     likes={image.likes}/>
                 ))
             }
