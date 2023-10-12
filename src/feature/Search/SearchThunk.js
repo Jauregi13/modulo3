@@ -17,11 +17,14 @@ export const getPhotosThunk = createAsyncThunk("search/getPhotos", async (query)
 
     const images = response.results.map(image => ({
 
-        url : image.urls.thumb,
         name: image.alt_description,
         width: image.width,
         height: image.height,
-        likes: image.likes
+        likes: image.likes,
+        date: image.created_at,
+        image_small : image.urls.thumb,
+        image_regular: image.urls.regular,
+        download_url: image.urls.full
     }));
 
      

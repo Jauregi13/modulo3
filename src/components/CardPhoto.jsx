@@ -25,7 +25,7 @@ const CardImage = styled(CardMedia)(() =>({
     height: '70%'
 }))
 
-export default function CardPhoto({sx, title,image, content}){
+export default function CardPhoto({sx, title,image, content, addPhoto}){
 
     return (
         <CardElement sx={sx}>
@@ -34,7 +34,7 @@ export default function CardPhoto({sx, title,image, content}){
                 <Typography variant="h5Second">{title}</Typography>
             } 
             action={
-                <IconButton><AddCircle /></IconButton>
+                <IconButton onClick={addPhoto}><AddCircle /></IconButton>
             }/>
             <CardImage
                 component='img'
