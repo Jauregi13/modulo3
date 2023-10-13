@@ -7,6 +7,7 @@ import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favourite
 import { useEffect, useState } from "react"
 import { format, set } from "date-fns"
 import { ModalDialog } from "../components/ModalDialog"
+import { useSearchContext } from "../components/SearchContext"
 
 
 
@@ -19,6 +20,7 @@ export const MyPhotos = () => {
     const [newName,setNewName] = useState('')
     const [openEdit,setOpenEdit] = useState(false)
     const [openRemove, setOpenRemove] = useState(false)
+    const {query} = useSearchContext()
 
     const openEditModal = (image) => {
 
@@ -60,9 +62,14 @@ export const MyPhotos = () => {
 
     useEffect(() => {
 
-        setImageFavourites(getPhotos)
+        if(query === ''){
+            setImageFavourites(getPhotos)
+        }
+        else {
+            setImageFavourites(getPhotos.filter((image) => image.name.includes(query)))  
+        }
 
-    },[dispatch,getPhotos])
+    },[dispatch,getPhotos,query])
 
     return (
         <>
