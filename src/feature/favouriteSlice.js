@@ -11,9 +11,16 @@ export const favouriteSlice = createSlice({
         },
         removePhoto: (state,action) => {
             return state.filter((image) => image.name !== action.payload.name)
+        },
+        editPhoto: (state,action) => {
+            state.map((image) => {
+                if(image.name === action.payload.actualName){
+                    image.name = action.payload.newName
+                }
+            })
         }
     }
 })
 
-export const {addPhoto,removePhoto} = favouriteSlice.actions
+export const {addPhoto,removePhoto,editPhoto} = favouriteSlice.actions
 export const getFavouritePhotos = (state) => state.favourite

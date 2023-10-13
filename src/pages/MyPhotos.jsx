@@ -3,9 +3,10 @@ import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 import { useDispatch, useSelector } from "react-redux"
-import { getFavouritePhotos, removePhoto } from "../feature/favouriteSlice"
+import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favouriteSlice"
 import { useEffect, useState } from "react"
 import { format, set } from "date-fns"
+import { ModalDialog } from "../components/ModalDialog"
 
 
 
@@ -14,17 +15,54 @@ export const MyPhotos = () => {
     const dispatch = useDispatch()
     const getPhotos = useSelector(getFavouritePhotos)
     const [imageFavourites,setImageFavourites] = useState([])
+    const [imageActual, setImageActual] = useState({})
+    const [newName,setNewName] = useState('')
+    const [openEdit,setOpenEdit] = useState(false)
+    const [openRemove, setOpenRemove] = useState(false)
 
-    const handleRemovePhoto = (image) => {
+    const openEditModal = (image) => {
 
-        dispatch(removePhoto(image))
+        setImageActual(image)
+        setNewName(image.name)
+        setOpenEdit(true);
+    }
+
+    const closeEditModal = () => {
+        
+        setOpenEdit(false)
+    }
+
+    const openRemoveModal = (image) => {
+
+        setImageActual(image)
+        setOpenRemove(true)
+    }
+
+    const closeRemoveModal = () => {
+
+        setOpenRemove(false)
+    }
+
+    const handleRemovePhoto = () => {
+
+        dispatch(removePhoto(imageActual))
+        closeRemoveModal()
+    }
+
+    const handleEditPhoto = () => {
+        let images = {
+            actualName : imageActual.name,
+            newName: newName
+        }
+        dispatch(editPhoto(images))
+        closeEditModal()
     }
 
     useEffect(() => {
 
         setImageFavourites(getPhotos)
 
-    },[getPhotos])
+    },[dispatch,getPhotos])
 
     return (
         <>
@@ -46,10 +84,29 @@ export const MyPhotos = () => {
             {
                 imageFavourites.map((image,id) => (
                     <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
-                    likes={image.likes} removePhoto={() => handleRemovePhoto(image)}/>
+                    likes={image.likes} openEditModal={() => openEditModal(image)} openRemoveModal={() => openRemoveModal(image)}/>
                 ))
             }
         </Container>
+
+        <ModalDialog 
+            title='Edit name photo'
+            text='Escribe la nueva descripción de la imagen'
+            setNewName={setNewName}
+            operation={() => handleEditPhoto()}
+            open={openEdit}
+            imageActualName={newName}
+            close={() => closeEditModal()}
+            role='edit'
+        />
+
+        <ModalDialog 
+            title='Remove photo'
+            text='Estás seguro que quieres eliminar esta foto de favoritos?'
+            operation={() => handleRemovePhoto()}
+            open={openRemove}
+            close={() => closeRemoveModal()}
+        />
         
 
         </>

@@ -52,7 +52,7 @@ const CardActionsStyled = styled(CardActions)(({theme}) => ({
 }))
 
 
-export const CardPhotoWithInfo = ({title,img,height,width,likes,date, removePhoto}) => {
+export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditModal, openRemoveModal}) => {
 
     return (
         <CardElement>
@@ -62,7 +62,7 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date, removePhot
                 title = {<Typography variant="h3Second" component='h3'>{title}</Typography>}
                 subheader = {<Typography variant="h4SecondRegular">{date}</Typography>}
                 action={
-                    <IconButton onClick={removePhoto}><CancelOutlined/></IconButton>
+                    <IconButton onClick={openRemoveModal}><CancelOutlined/></IconButton>
                 }
             />
 
@@ -89,7 +89,7 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date, removePhot
                 
             </CardContent>
             <CardActionsStyled>
-                <IconButton>
+                <IconButton onClick={openEditModal}>
                     <EditOutlined/>
                 </IconButton>
                 <IconButton className="download-blue">
