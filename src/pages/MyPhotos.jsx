@@ -17,7 +17,6 @@ export const MyPhotos = () => {
     const dispatch = useDispatch()
     const getPhotos = useSelector(getFavouritePhotos)   
     const [imageFavourites,setImageFavourites] = useState([])
-    const [imageFavouritesOrdered,setImageFavouritesOrdered] = useState([])
     const [imageActual, setImageActual] = useState({})
     const [newName,setNewName] = useState('')
     const [openEdit,setOpenEdit] = useState(false)
@@ -80,6 +79,7 @@ export const MyPhotos = () => {
 
                 setIconWidth(<UnfoldMore />)
                 setIconLikes(<UnfoldMore />)
+                setIconDate(<UnfoldMore />)
 
                 if(iconHeight.type === UnfoldMore){
                     setIconHeight(<ExpandMore />)
@@ -113,6 +113,7 @@ export const MyPhotos = () => {
 
                 setIconHeight(<UnfoldMore />)
                 setIconLikes(<UnfoldMore />)
+                setIconDate(<UnfoldMore />)
 
                 if(iconWidth.type === UnfoldMore){
                     setIconWidth(<ExpandMore />)
@@ -144,6 +145,7 @@ export const MyPhotos = () => {
 
                 setIconWidth(<UnfoldMore />)
                 setIconHeight(<UnfoldMore />)
+                setIconDate(<UnfoldMore />)
 
 
                 if(iconLikes.type === UnfoldMore){
@@ -164,6 +166,38 @@ export const MyPhotos = () => {
                 }
                 else {
                     setIconLikes(<UnfoldMore />)
+                    setOrder({
+                        ordered: false,
+                        orderType: null,
+                        orderMode: null
+                    })
+                }
+                break;
+            
+                case 'date':
+
+                setIconWidth(<UnfoldMore />)
+                setIconHeight(<UnfoldMore />)
+                setIconLikes(<UnfoldMore />)
+
+                if(iconDate.type === UnfoldMore){
+                    setIconDate(<ExpandMore />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'date',
+                        orderMode: 'desc'
+                    })
+                }
+                else if(iconDate.type === ExpandMore){
+                    setIconDate(<ExpandLess />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'date',
+                        orderMode: 'asc'
+                    })
+                }
+                else {
+                    setIconDate(<UnfoldMore />)
                     setOrder({
                         ordered: false,
                         orderType: null,
@@ -233,6 +267,13 @@ export const MyPhotos = () => {
     },[dispatch,getPhotos,query,order])
 
 
+    const formatedDataImages = imageFavourites.map((image) => {
+        const dateImage = new Date(image.date)
+        const dateFormat = format(dateImage,"dd MMM,yyyy")
+        return {...image,date:dateFormat}
+    })
+
+
     return (
         <>
         <Box sx={{marginLeft:'2em', paddingTop:'1em', marginBottom:'1em'}}>
@@ -251,9 +292,9 @@ export const MyPhotos = () => {
         <Container sx={{width: '80%', marginTop: '1em'}}>
 
             {
-                imageFavourites.map((image,id) => (
+                formatedDataImages.map((image,id) => (
                     <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
-                    likes={image.likes} openEditModal={() => openEditModal(image)} openRemoveModal={() => openRemoveModal(image)}/>
+                        likes={image.likes} date={image.date} openEditModal={() => openEditModal(image)} openRemoveModal={() => openRemoveModal(image)}/>
                 ))
             }
         </Container>
