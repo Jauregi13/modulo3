@@ -8,19 +8,31 @@ import { useEffect, useState } from "react"
 import { format, set } from "date-fns"
 import { ModalDialog } from "../components/ModalDialog"
 import { useSearchContext } from "../components/SearchContext"
+import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
 
 
 
 export const MyPhotos = () => {
 
     const dispatch = useDispatch()
-    const getPhotos = useSelector(getFavouritePhotos)
+    const getPhotos = useSelector(getFavouritePhotos)   
     const [imageFavourites,setImageFavourites] = useState([])
+    const [imageFavouritesOrdered,setImageFavouritesOrdered] = useState([])
     const [imageActual, setImageActual] = useState({})
     const [newName,setNewName] = useState('')
     const [openEdit,setOpenEdit] = useState(false)
     const [openRemove, setOpenRemove] = useState(false)
     const {query} = useSearchContext()
+
+    const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
+    const [iconWidth, setIconWidth] = useState(<UnfoldMore/>)
+    const [iconLikes, setIconLikes] = useState(<UnfoldMore/>)
+    const [iconDate, setIconDate] = useState(<UnfoldMore/>)
+    const [order,setOrder] = useState({
+        ordered: false,
+        orderType: null,
+        orderMode: null
+    })
 
     const openEditModal = (image) => {
 
@@ -60,16 +72,166 @@ export const MyPhotos = () => {
         closeEditModal()
     }
 
-    useEffect(() => {
+    const handleOrderBy = (type) => {
+        
 
-        if(query === ''){
-            setImageFavourites(getPhotos)
+        switch (type) {
+            case 'height':
+
+                setIconWidth(<UnfoldMore />)
+                setIconLikes(<UnfoldMore />)
+
+                if(iconHeight.type === UnfoldMore){
+                    setIconHeight(<ExpandMore />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'height',
+                        orderMode: 'desc'
+                    })
+                    
+                }
+                else if(iconHeight.type === ExpandMore){
+                    setIconHeight(<ExpandLess />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'height',
+                        orderMode: 'asc'
+                    })
+                }
+                else {
+                    setIconHeight(<UnfoldMore />)
+                    setOrder({
+                        ordered: false,
+                        orderType: null,
+                        orderMode: null
+                    })
+
+                }
+                break;
+            
+            case 'width':
+
+                setIconHeight(<UnfoldMore />)
+                setIconLikes(<UnfoldMore />)
+
+                if(iconWidth.type === UnfoldMore){
+                    setIconWidth(<ExpandMore />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'width',
+                        orderMode: 'desc'
+                    })
+                }
+                else if(iconWidth.type === ExpandMore){
+                    setIconWidth(<ExpandLess />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'width',
+                        orderMode: 'asc'
+                    })
+                }
+                else {
+                    setIconWidth(<UnfoldMore />)
+                    setOrder({
+                        ordered: false,
+                        orderType: null,
+                        orderMode: null
+                    })
+                }
+                break;
+        
+            case 'likes':
+
+                setIconWidth(<UnfoldMore />)
+                setIconHeight(<UnfoldMore />)
+
+
+                if(iconLikes.type === UnfoldMore){
+                    setIconLikes(<ExpandMore />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'likes',
+                        orderMode: 'desc'
+                    })
+                }
+                else if(iconLikes.type === ExpandMore){
+                    setIconLikes(<ExpandLess />)
+                    setOrder({
+                        ordered: true,
+                        orderType: 'likes',
+                        orderMode: 'asc'
+                    })
+                }
+                else {
+                    setIconLikes(<UnfoldMore />)
+                    setOrder({
+                        ordered: false,
+                        orderType: null,
+                        orderMode: null
+                    })
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    const orderDescImage = (a, b, type) => {
+
+        if(a[type] > b[type]){
+            return -1
+        }
+        else if (a[type] < b[type]){
+            return 1
         }
         else {
-            setImageFavourites(getPhotos.filter((image) => image.name.includes(query)))  
+            return 0
         }
 
-    },[dispatch,getPhotos,query])
+    }
+
+    const orderAscImage = (a, b, type) => {
+
+        if(b[type] > a[type]){
+            return -1
+        }
+        else if (b[type] < a[type]){
+            return 1
+        }
+        else {
+            return 0
+        }
+    }
+
+    useEffect(() => {
+
+        let updatedImageFavourites = [...imageFavourites]
+
+        if(query === ''){
+
+            updatedImageFavourites = getPhotos;
+            
+        }
+        else if(query !== ''){
+
+            updatedImageFavourites = getPhotos.filter((image) => image.name.includes(query));
+            
+        }
+
+        if(order.ordered){
+            if(order.orderMode === 'desc'){
+                updatedImageFavourites = updatedImageFavourites.slice().sort((a,b) => orderDescImage(a,b,order.orderType))
+            }
+            else if(order.orderMode === 'asc'){
+                updatedImageFavourites = updatedImageFavourites.slice().sort((a,b) => orderAscImage(a,b,order.orderType))
+            }
+            
+        }
+
+        setImageFavourites(updatedImageFavourites)
+
+    },[dispatch,getPhotos,query,order])
+
 
     return (
         <>
@@ -80,10 +242,10 @@ export const MyPhotos = () => {
         </Box>
 
         <Container sx={{backgroundColor:'#FFFFFF', width:'80%', borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex'}}>
-            <OrderBy title='Height'/>
-            <OrderBy title='Width' />
-            <OrderBy title='Likes' />
-            <OrderBy title='Date' />
+            <OrderBy title='Height' onClick={() => handleOrderBy('height')} icon={iconHeight}/>
+            <OrderBy title='Width' onClick={() =>handleOrderBy('width')} icon={iconWidth}/>
+            <OrderBy title='Likes' onClick={() =>handleOrderBy('likes')} icon={iconLikes}/>
+            <OrderBy title='Date' onClick={() => handleOrderBy('date')} icon={iconDate}/>
         </Container>
 
         <Container sx={{width: '80%', marginTop: '1em'}}>

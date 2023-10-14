@@ -53,7 +53,7 @@ export const Header = () => {
 
     const location = useLocation()
     const [title, setTitle] = useState('Search Photos')
-    const {updateQuery} = useSearchContext()
+    const {query,updateQuery} = useSearchContext()
 
     useEffect(() => {
 
@@ -83,6 +83,7 @@ export const Header = () => {
                             <StyledInputBase
                             placeholder="Search Description…"
                             inputProps={{ 'aria-label': 'search' }}
+                            value={query}
                             onChange={(event) => updateQuery(event.target.value)}
                             />
                         </Search>
