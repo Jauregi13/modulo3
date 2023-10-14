@@ -1,11 +1,11 @@
-import { Box, Container } from "@mui/material"
+import { Backdrop, Box, CircularProgress, Container } from "@mui/material"
 import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 import { useDispatch, useSelector } from "react-redux"
-import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favouriteSlice"
+import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favouriteSlice" 
 import { useEffect, useState } from "react"
-import { format, set } from "date-fns"
+import { format } from "date-fns"
 import { ModalDialog } from "../components/ModalDialog"
 import { useSearchContext } from "../components/SearchContext"
 import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
@@ -15,13 +15,17 @@ import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
 export const MyPhotos = () => {
 
     const dispatch = useDispatch()
-    const getPhotos = useSelector(getFavouritePhotos)   
+    const getPhotos = useSelector(getFavouritePhotos)
+    const {query} = useSearchContext()
+
     const [imageFavourites,setImageFavourites] = useState([])
     const [imageActual, setImageActual] = useState({})
     const [newName,setNewName] = useState('')
+
+    const [loadingDownload,setloadingDownload] = useState(false)
     const [openEdit,setOpenEdit] = useState(false)
     const [openRemove, setOpenRemove] = useState(false)
-    const {query} = useSearchContext()
+    
 
     const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
     const [iconWidth, setIconWidth] = useState(<UnfoldMore/>)
@@ -69,6 +73,37 @@ export const MyPhotos = () => {
         }
         dispatch(editPhoto(images))
         closeEditModal()
+    }
+
+    const handleDownloadImage = async (image) => {
+
+        setloadingDownload(true)
+
+        setTimeout(() => {
+            fetch(image.download_url).then(response => response.blob())
+        .then(blob => {
+
+            const url = window.URL.createObjectURL(blob)
+
+            const link = document.createElement('a')
+            link.href = url
+            link.download = image.name + '.jpg'
+
+            link.click()
+
+            window.URL.revokeObjectURL(url)
+
+            setloadingDownload(false)
+
+        }).catch((error) => {
+            console.error('Error al descargar:',error);
+        })
+        },1000)
+
+        
+
+        
+        
     }
 
     const handleOrderBy = (type) => {
@@ -294,7 +329,10 @@ export const MyPhotos = () => {
             {
                 formatedDataImages.map((image,id) => (
                     <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
-                        likes={image.likes} date={image.date} openEditModal={() => openEditModal(image)} openRemoveModal={() => openRemoveModal(image)}/>
+                        likes={image.likes} date={image.date} 
+                        openEditModal={() => openEditModal(image)} 
+                        openRemoveModal={() => openRemoveModal(image)}
+                        downloadImage={() => handleDownloadImage(image)}/>
                 ))
             }
         </Container>
@@ -317,6 +355,12 @@ export const MyPhotos = () => {
             open={openRemove}
             close={() => closeRemoveModal()}
         />
+
+        <Backdrop open={loadingDownload} sx={{zIndex: '1'}}>
+
+            <CircularProgress color="primary"></CircularProgress>
+
+        </Backdrop>
         
 
         </>
