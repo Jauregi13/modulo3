@@ -52,7 +52,7 @@ const CardActionsStyled = styled(CardActions)(({theme}) => ({
 }))
 
 
-export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditModal, openRemoveModal}) => {
+export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditModal, openRemoveModal, downloadImage}) => {
 
     return (
         <CardElement>
@@ -92,9 +92,10 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditMod
                 <IconButton onClick={openEditModal}>
                     <EditOutlined/>
                 </IconButton>
-                <IconButton className="download-blue">
-                    <DownloadOutlined />
+                <IconButton className="download-blue" onClick={downloadImage}>
+                        <DownloadOutlined />
                 </IconButton>
+                
             </CardActionsStyled>
 
         </CardElement>
