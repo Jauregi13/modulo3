@@ -1,8 +1,7 @@
-import { AppBar, Toolbar, Typography, styled, InputBase, alpha } from "@mui/material"
+import { AppBar, Toolbar, Typography, styled, InputBase, alpha, Hidden, Box, Button } from "@mui/material"
 import { SearchOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import './Header.css'
+import { NavLink, useLocation } from "react-router-dom"
 import { useSearchContext } from "./SearchContext"
 
 
@@ -49,6 +48,22 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
+  const NavItem = styled(Button)(() => ({
+
+    '& h2':{
+      color: '#FFFFFF'
+    },
+
+    '&.active': {
+      borderBottom: '5px solid #FFFFFF',
+      borderRadius: '0'
+    },
+    '& h2:hover': {
+      color:'#c0bfbf'
+    }
+
+  }))
+
 export const Header = () => {
 
     const location = useLocation()
@@ -70,12 +85,13 @@ export const Header = () => {
     return (
         <AppBar position="static" className="header">
             <Toolbar className="header__content">
-                <Typography variant="h2" noWrap component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h2" noWrap component="div" sx={{ flexGrow: 1, typography: {xs: 'h2',sm:'h1'}}}>
                     {title}
                 </Typography>
                 { 
                     location.pathname === '/modulo3/myPhotos' &&
                     (
+                      <Hidden mdUp>
                         <Search>
                             <SearchIconWrapper>
                                 <SearchOutlined />
@@ -87,9 +103,21 @@ export const Header = () => {
                             onChange={(event) => updateQuery(event.target.value)}
                             />
                         </Search>
+                      </Hidden>
                     )
                 
                 }
+                <Hidden mdDown>
+                  <Box sx={{display: 'flex', height:'64px'}}>
+                    <NavItem LinkComponent={NavLink} to="searchPhotos">
+                      <Typography variant="h2">Search Photos</Typography>
+                    </NavItem>
+                    <NavItem LinkComponent={NavLink} to="myPhotos">
+                      <Typography variant="h2">My Photos</Typography>
+                    </NavItem>
+                  </Box>
+                </Hidden>
+                
             </Toolbar>
         </AppBar>
     )
