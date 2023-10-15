@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, Container } from "@mui/material"
+import { Backdrop, Box, CircularProgress, Container, Stack, Pagination } from "@mui/material"
 import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
@@ -25,6 +25,9 @@ export const MyPhotos = () => {
     const [loadingDownload,setloadingDownload] = useState(false)
     const [openEdit,setOpenEdit] = useState(false)
     const [openRemove, setOpenRemove] = useState(false)
+
+    const [page,setPage] = useState(1)
+    const imagesPerPage = 2
     
 
     const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
@@ -308,6 +311,15 @@ export const MyPhotos = () => {
         return {...image,date:dateFormat}
     })
 
+    const handleChangePage = (event,newPage) => {
+
+        setPage(newPage)
+    }
+
+    const startImage = (page -1) * imagesPerPage
+    const endImage = startImage + imagesPerPage
+    const displayImages = formatedDataImages.slice(startImage,endImage)
+
 
     return (
         <>
@@ -327,13 +339,29 @@ export const MyPhotos = () => {
         <Container sx={{width: '80%', marginTop: '1em'}}>
 
             {
-                formatedDataImages.map((image,id) => (
+                
+                displayImages.map((image,id) => (
                     <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
                         likes={image.likes} date={image.date} 
                         openEditModal={() => openEditModal(image)} 
                         openRemoveModal={() => openRemoveModal(image)}
                         downloadImage={() => handleDownloadImage(image)}/>
                 ))
+                
+                
+            }
+
+            {
+                formatedDataImages.length >= 3 &&
+
+                <Stack spacing={2} sx={{alignItems:'center'}}>
+                <Pagination color='primary'
+                    justifyContent="center"
+                    count={Math.ceil(formatedDataImages.length/imagesPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                />
+                </Stack>
             }
         </Container>
 

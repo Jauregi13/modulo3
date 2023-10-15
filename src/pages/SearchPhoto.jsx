@@ -1,7 +1,7 @@
 import './SearchPhoto.css';
 import Search from '../components/SearchInput';
 import CardPhoto from '../components/CardPhoto';
-import { Alert, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Grid, Pagination, Stack, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPhotosThunk } from '../feature/Search/SearchThunk';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,8 @@ export const SearchPhoto = () => {
     const [images,setImages] = useState([])
     const [alert,setAlert] = useState('')
     const [loading,setLoading] = useState(false)
+    const [page,setPage] = useState(1)
+    const imagesPerPage = 4
 
     const searcPhotos = async (event) => {
 
@@ -62,8 +64,6 @@ export const SearchPhoto = () => {
                 break;
         
             case 'fulfilled':
-                
-                
 
                 loading = setTimeout(() => {
 
@@ -87,6 +87,18 @@ export const SearchPhoto = () => {
 
     },[dispatch,searchImages,searchStatus])
 
+    const handleChangePage = (event,newPage) => {
+
+        setPage(newPage)
+    }
+
+    const startImage = (page -1) * imagesPerPage
+    const endImage = startImage + imagesPerPage
+    const displayImages = images.slice(startImage,endImage)
+
+
+
+
     return (
         <>
         
@@ -102,19 +114,31 @@ export const SearchPhoto = () => {
                     </Grid>
                 </Grid>
             ) :  images.length !== 0 ? (
-                <Grid container columnSpacing={1} rowSpacing={2} sx={{width:'95%'}}>
-                    {images.map((image, id) => (
+                <>
+                <Grid container columnSpacing={1} rowSpacing={5} sx={{width:'95%'}}>
+                    {displayImages.map((image, id) => (
                         <Grid item xs={6} key={id}>
                         <CardPhoto sx={{marginLeft:'1.5em'}}  title={image.name} image={image.image_small} addPhoto={() => handleAddPhoto(image)}/>
                         </Grid>
                     ))}
                 </Grid>
-             ): (
+                <Stack spacing={2} sx={{marginTop:'8em', alignItems:'center'}}>
+                <Pagination color='primary'
+                    justifyContent="center"
+                    count={Math.ceil(images.length/imagesPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                />
+                </Stack>
+                </>
+             )
+                
+             : (
                 alert
              )    
         }
         
-        {}
+        
         
         
         </>
