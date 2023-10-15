@@ -9,7 +9,8 @@ const unsplash = createApi({
 export const getPhotosThunk = createAsyncThunk("search/getPhotos", async (query) => {
 
     const search = await unsplash.search.getPhotos({
-        query: query
+        query: query,
+        perPage: 12
     })
 
     const response = search.response
