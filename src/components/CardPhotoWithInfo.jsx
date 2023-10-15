@@ -6,7 +6,7 @@ const CardElement = styled(Card)(() =>({
     borderRadius: '20px',
     display: 'flex',
     flexDirection: 'column',
-    height: '17em',
+    height: '15em',
     marginBottom:'2em'
 
 }))

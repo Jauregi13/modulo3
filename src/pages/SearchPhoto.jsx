@@ -122,9 +122,8 @@ export const SearchPhoto = () => {
                         </Grid>
                     ))}
                 </Grid>
-                <Stack spacing={2} sx={{marginTop:'8em', alignItems:'center'}}>
+                <Stack spacing={2} sx={{marginTop:'1em', alignItems:'center'}}>
                 <Pagination color='primary'
-                    justifyContent="center"
                     count={Math.ceil(images.length/imagesPerPage)}
                     page={page}
                     onChange={handleChangePage}

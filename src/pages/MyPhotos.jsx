@@ -323,12 +323,6 @@ export const MyPhotos = () => {
 
     return (
         <>
-        <Box sx={{marginLeft:'2em', paddingTop:'1em', marginBottom:'1em'}}>
-            <Tag label='Playa'/>
-            <Tag label='Paisaje'/>
-            <Tag label='Deporte'/>
-        </Box>
-
         <Container sx={{backgroundColor:'#FFFFFF', width:'80%', borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex'}}>
             <OrderBy title='Height' onClick={() => handleOrderBy('height')} icon={iconHeight}/>
             <OrderBy title='Width' onClick={() =>handleOrderBy('width')} icon={iconWidth}/>
@@ -356,7 +350,6 @@ export const MyPhotos = () => {
 
                 <Stack spacing={2} sx={{alignItems:'center'}}>
                 <Pagination color='primary'
-                    justifyContent="center"
                     count={Math.ceil(formatedDataImages.length/imagesPerPage)}
                     page={page}
                     onChange={handleChangePage}
