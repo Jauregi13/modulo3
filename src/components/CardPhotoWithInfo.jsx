@@ -1,5 +1,5 @@
-import { CancelOutlined, DownloadOutlined, EditOutlined, FavoriteOutlined, HeightOutlined } from "@mui/icons-material"
-import { styled, Card, CardHeader, CardMedia, CardContent, Typography, IconButton, CardActions, Grid, keyframes } from "@mui/material"
+import { CancelOutlined, DownloadOutlined, EditOutlined, FavoriteOutlined, HeightOutlined, CompareArrows } from "@mui/icons-material"
+import { styled, Card, CardHeader, CardMedia, CardContent, Typography, IconButton, CardActions, Grid } from "@mui/material"
 
 const CardElement = styled(Card)(({theme}) =>({
 
@@ -89,7 +89,7 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditMod
                         <Typography variant="h4SecondRegular">{height}</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <HeightOutlined/>
+                        <CompareArrows/>
                         <Typography variant="h4SecondRegular">{width}</Typography>
                     </Grid>
                     <Grid item xs={4}>

@@ -27,7 +27,7 @@ const CardImage = styled(CardMedia)(() =>({
     height: '70%'
 }))
 
-export default function CardPhoto({sx, title,image, content, addPhoto}){
+export default function CardPhoto({sx, title,image, addPhoto}){
 
     return (
         <CardElement sx={sx}>
@@ -42,7 +42,6 @@ export default function CardPhoto({sx, title,image, content, addPhoto}){
                 component='img'
                 image={image}
             />
-            {content}
 
         </CardElement>
     )
