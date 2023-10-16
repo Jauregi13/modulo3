@@ -3,7 +3,7 @@ import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Search as SearchIcon } from '@mui/icons-material'
 
 
-const SearchComponent = styled(TextField)(({theme, ...props}) =>({
+const SearchComponent = styled(TextField)(() =>({
     
     backgroundColor: '#FFFFFF',
     borderRadius:'10px',
@@ -18,17 +18,22 @@ const SearchComponent = styled(TextField)(({theme, ...props}) =>({
         color: '#878282',
         fontFamily: 'JetBrains Mono',
         fontWeight: '700'
+    },
+
+    'input[type=text]': {
+        fontFamily: 'JetBrains Mono',
+        fontWeight: '700'
     }
 
 }))
 
 
-export default function Search({sx, placeholder,name, ...other}){
+export default function Search({sx, placeholder,name, onChange}){
 
     return <SearchComponent sx={sx}
             name={name} 
             placeholder={placeholder} 
-            {...other}
+            onChange={onChange}
             InputProps={{
                 endAdornment: <InputAdornment position='end'><IconButton type='submit'><SearchIcon /></IconButton></InputAdornment>
             }}/>

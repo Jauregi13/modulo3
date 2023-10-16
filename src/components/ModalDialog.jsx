@@ -1,6 +1,14 @@
+import styled from "@emotion/styled"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material"
-import { useState } from "react"
 
+const TextFieldStyled = styled(TextField)(() =>({
+
+    'input[type=text]':{
+        fontFamily: 'JetBrains Mono',
+        fontWeight: 400,
+        fontSize: '14px'
+    }
+}))
 
 
 export const ModalDialog = ({title,text,open,close,operation,role,imageActualName, setNewName}) => {
@@ -15,7 +23,7 @@ export const ModalDialog = ({title,text,open,close,operation,role,imageActualNam
                 </DialogContentText>
                 {
                     role === 'edit' && (
-                        <TextField 
+                        <TextFieldStyled sx={{marginTop:'2em'}}
                         type="text"
                         variant="outlined"
                         label='Image description'

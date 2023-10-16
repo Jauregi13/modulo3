@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { Card, CardHeader, CardMedia, IconButton, Typography } from "@mui/material";
 import { AddCircle } from '@mui/icons-material'
 
+
+
 const CardElement = styled(Card)(() => ({
 
     borderRadius: '20px',
@@ -31,7 +33,7 @@ export default function CardPhoto({sx, title,image, content, addPhoto}){
         <CardElement sx={sx}>
 
             <CardTitle title={
-                <Typography variant="h5Second">{title}</Typography>
+                <Typography variant="h4Second">{title}</Typography>
             } 
             action={
                 <IconButton onClick={addPhoto}><AddCircle /></IconButton>

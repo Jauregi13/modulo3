@@ -1,13 +1,18 @@
 import { CancelOutlined, DownloadOutlined, EditOutlined, FavoriteOutlined, HeightOutlined } from "@mui/icons-material"
-import { styled, Card, CardHeader, CardMedia, CardContent, Typography, IconButton, CardActions, Grid } from "@mui/material"
+import { styled, Card, CardHeader, CardMedia, CardContent, Typography, IconButton, CardActions, Grid, keyframes } from "@mui/material"
 
-const CardElement = styled(Card)(() =>({
+const CardElement = styled(Card)(({theme}) =>({
 
     borderRadius: '20px',
     display: 'flex',
     flexDirection: 'column',
     height: '15em',
-    marginBottom:'2em'
+    marginBottom:'2em',
+
+    [theme.breakpoints.up('md')]:{
+        height:'20em'
+    }
+
 
 }))
 
@@ -17,8 +22,14 @@ const CardHeaderStyled = styled(CardHeader)(({theme}) => ({
 
     '& .MuiIconButton-root': {
         color: theme.palette.error.main
+    },
+    '& h3':{
+        height:'2em',
+        overflow:'auto',
     }
 }))
+
+
 
 
 const GridStyled = styled(Grid)(() => ({
@@ -60,7 +71,7 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditMod
             <CardHeaderStyled
 
                 title = {<Typography variant="h3Second" component='h3'>{title}</Typography>}
-                subheader = {<Typography variant="h4SecondRegular">{date}</Typography>}
+                subheader = {<Typography variant="h4SecondRegular" sx={{marginTop:'1em'}}>{date}</Typography>}
                 action={
                     <IconButton onClick={openRemoveModal}><CancelOutlined/></IconButton>
                 }
