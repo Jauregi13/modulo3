@@ -1,5 +1,4 @@
-import { Backdrop, Box, CircularProgress, Container, Stack, Pagination, useTheme, Grid, Hidden } from "@mui/material"
-import { Tag } from "../components/Tag"
+import { Backdrop, CircularProgress, Container, Stack, Pagination, Grid, Hidden } from "@mui/material"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 import Search from '../components/SearchInput';
@@ -15,7 +14,6 @@ import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
 
 export const MyPhotos = () => {
 
-    const theme = useTheme()
     const dispatch = useDispatch()
     const getPhotos = useSelector(getFavouritePhotos)
     const {query, updateQuery} = useSearchContext()
@@ -31,8 +29,6 @@ export const MyPhotos = () => {
     const [page,setPage] = useState(1)
     const [imagesPerPage,setImagesPerPage] = useState(3)
     
-    
-
     const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
     const [iconWidth, setIconWidth] = useState(<UnfoldMore/>)
     const [iconLikes, setIconLikes] = useState(<UnfoldMore/>)
