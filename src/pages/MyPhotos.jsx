@@ -1,7 +1,8 @@
-import { Backdrop, Box, CircularProgress, Container, Stack, Pagination } from "@mui/material"
+import { Backdrop, Box, CircularProgress, Container, Stack, Pagination, useTheme, Grid, Hidden } from "@mui/material"
 import { Tag } from "../components/Tag"
 import { OrderBy } from "../components/OrderBy"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
+import Search from '../components/SearchInput';
 import { useDispatch, useSelector } from "react-redux"
 import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favouriteSlice" 
 import { useEffect, useState } from "react"
@@ -14,9 +15,10 @@ import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
 
 export const MyPhotos = () => {
 
+    const theme = useTheme()
     const dispatch = useDispatch()
     const getPhotos = useSelector(getFavouritePhotos)
-    const {query} = useSearchContext()
+    const {query, updateQuery} = useSearchContext()
 
     const [imageFavourites,setImageFavourites] = useState([])
     const [imageActual, setImageActual] = useState({})
@@ -27,7 +29,8 @@ export const MyPhotos = () => {
     const [openRemove, setOpenRemove] = useState(false)
 
     const [page,setPage] = useState(1)
-    const imagesPerPage = 2
+    const [imagesPerPage,setImagesPerPage] = useState(3)
+    
     
 
     const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
@@ -102,10 +105,7 @@ export const MyPhotos = () => {
             console.error('Error al descargar:',error);
         })
         },1000)
-
-        
-
-        
+   
         
     }
 
@@ -316,6 +316,27 @@ export const MyPhotos = () => {
         setPage(newPage)
     }
 
+   
+    window.addEventListener('load',()=> {
+        if(window.innerWidth <= 899.5){
+            setImagesPerPage(2)
+        }
+        else {
+            setImagesPerPage(3)
+        }
+    })
+
+    
+    window.addEventListener('resize',() => {
+        console.log(window.innerWidth);
+        if(window.innerWidth <= 899.5){
+            setImagesPerPage(2)
+        }
+        else {
+            setImagesPerPage(3)
+        }
+    })
+    
     const startImage = (page -1) * imagesPerPage
     const endImage = startImage + imagesPerPage
     const displayImages = formatedDataImages.slice(startImage,endImage)
@@ -323,24 +344,38 @@ export const MyPhotos = () => {
 
     return (
         <>
-        <Container sx={{backgroundColor:'#FFFFFF', width:'80%', borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex'}}>
+        
+        <Hidden mdDown>
+            <Search sx={{marginTop:'1.5em', marginLeft:'1.5em', marginBottom:'2.5em', width:{xs: '80%',sm:'70%',md:'50%'}}} onChange={(event) => updateQuery(event.target.value)} placeholder='Search Description...' name='search'/>
+        </Hidden>
+         
+        
+        <Container sx={{backgroundColor:'#FFFFFF', width:{xs:'80%',md:'50%',lg:'33em'}, borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex', marginBottom:{md:'4em'},marginTop:{xs:'2em'}}}>
             <OrderBy title='Height' onClick={() => handleOrderBy('height')} icon={iconHeight}/>
             <OrderBy title='Width' onClick={() =>handleOrderBy('width')} icon={iconWidth}/>
             <OrderBy title='Likes' onClick={() =>handleOrderBy('likes')} icon={iconLikes}/>
             <OrderBy title='Date' onClick={() => handleOrderBy('date')} icon={iconDate}/>
         </Container>
 
-        <Container sx={{width: '80%', marginTop: '1em'}}>
+        <Container sx={{width: {xs:'80%',md:'100%'} , marginTop: '1em'}}>
 
             {
+                <Grid container columnSpacing={6}>
+                    {
+                        displayImages.map((image,id) => (
+                            <Grid item xs={12} md={4} key={id}>
+                                <CardPhotoWithInfo  title={image.name} img={image.image_url} height={image.height} width={image.width} 
+                                    likes={image.likes} date={image.date} 
+                                    openEditModal={() => openEditModal(image)} 
+                                    openRemoveModal={() => openRemoveModal(image)}
+                                    downloadImage={() => handleDownloadImage(image)}/>
+                            </Grid>
+                        ))
+                    }
+
+                </Grid>
                 
-                displayImages.map((image,id) => (
-                    <CardPhotoWithInfo key={id} title={image.name} img={image.image_small} height={image.height} width={image.width} 
-                        likes={image.likes} date={image.date} 
-                        openEditModal={() => openEditModal(image)} 
-                        openRemoveModal={() => openRemoveModal(image)}
-                        downloadImage={() => handleDownloadImage(image)}/>
-                ))
+                
                 
                 
             }
