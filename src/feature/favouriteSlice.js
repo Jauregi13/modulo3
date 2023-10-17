@@ -21,8 +21,10 @@ export const favouriteSlice = createSlice({
             return [...state,action.payload]
         },
         removePhoto: (state,action) => {
-            localStorage.setItem("images",state.filter((image) => image.name !== action.payload.name))
-            return state.filter((image) => image.name !== action.payload.name)
+            
+            const updateList = state.filter((image) => image.name !== action.payload.name)
+            localStorage.setItem("images",JSON.stringify(updateList))
+            return updateList
         },
         editPhoto: (state,action) => {
             state.map((image) => {

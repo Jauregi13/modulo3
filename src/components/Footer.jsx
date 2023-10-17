@@ -5,7 +5,7 @@ export const Footer = () => {
 
     return(
 
-        <div class="footer">
+        <div className="footer">
             <Typography variant="h1" sx={{display:'flex',alignItems:'center', height:'100%',marginLeft:'1em', color:'#FFFFFF'}}>Search Photos</Typography>
         </div>
     )

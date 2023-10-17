@@ -97,7 +97,7 @@ const theme = createTheme({
 
 const router = createBrowserRouter(createRoutesFromElements(
 
-  <Route path='/modulo3' element={<Root />}>
+  <Route path='/' element={<Root />}>
     <Route path='*' element={<Root />}/>
     <Route path='searchPhotos' element={<SearchPhoto />}/>
     <Route path='myPhotos' element={<MyPhotos />} />
