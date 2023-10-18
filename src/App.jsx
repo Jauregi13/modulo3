@@ -1,5 +1,5 @@
 import './App.css'
-import { Navigate, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { Navigate, Route, RouterProvider, createBrowserRouter, createHashRouter, createRoutesFromElements } from 'react-router-dom'
 import { Root } from './pages/Root'
 import { MyPhotos } from './pages/MyPhotos'
 import { SearchPhoto } from './pages/SearchPhoto'
