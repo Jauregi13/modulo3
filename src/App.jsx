@@ -10,29 +10,35 @@ const theme = createTheme({
   typography: {
     fontFamily: {
       primary: 'Istok Web',
-      secondary: 'JetBrains'
+      secondary: 'JetBrains Mono'
     },
     h1: {
+      fontFamily: 'Istok Web',
       fontSize: 32,
       fontWeight: 700
     },
     h2: {
+      fontFamily: 'Istok Web',
       fontSize: 20,
       fontWeight: 700
     },
     h2Regular: {
+      fontFamily: 'Istok Web',
       fontSize: 20,
       fontWeight: 400
     },
     h3: {
+      fontFamily: 'Istok Web',
       fontSize: 16,
       fontWeight: 700
     },
     h3Regular: {
+      fontFamily: 'Istok Web',
       fontSize: 16,
       fontWeight: 400
     },
     h4: {
+      fontFamily: 'Istok Web',
       fontSize: 10,
       fontWeight: 700
     },

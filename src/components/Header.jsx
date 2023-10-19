@@ -1,9 +1,9 @@
-import { AppBar, Toolbar, Typography, styled, InputBase, alpha, Hidden, Box, Button } from "@mui/material"
+import { AppBar, Toolbar, Typography, styled, InputBase, alpha, Container, Box, Button, IconButton,Menu,MenuItem } from "@mui/material"
 import { SearchOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useSearchContext } from "./SearchContext"
-
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -52,7 +52,8 @@ const Search = styled('div')(({ theme }) => ({
 
     '&.active': {
       borderBottom: '5px solid #FFFFFF',
-      borderRadius: '0'
+      borderRadius: '0',
+      paddingTop: '0.8em'
     },
     '& h2:hover': {
       color:'#c0bfbf'
@@ -65,10 +66,19 @@ export const Header = () => {
     const location = useLocation()
     const [title, setTitle] = useState('Search Photos')
     const {query,updateQuery} = useSearchContext()
+    const [anchor,setAnchor] = useState(null)
+
+    const handleOpenMenu = (event) => {
+      setAnchor(event.currentTarget)
+    }
+
+    const handleCloseMenu = () => {
+      setAnchor(null)
+    }
 
     useEffect(() => {
 
-        if(location.pathname === '/modulo3/myPhotos'){
+        if(location.pathname === '/myPhotos'){
             setTitle('My Photos')
         }
         else {
@@ -80,15 +90,53 @@ export const Header = () => {
 
     return (
         <AppBar position="static" className="header">
-            <Toolbar className="header__content">
-                <Typography variant="h2" noWrap component="div" sx={{ flexGrow: 1, typography: {xs: 'h2',sm:'h1'}}}>
+            <Container maxWidth='xl'>
+              <Toolbar className="header__content">
+                <Typography variant="h2" noWrap component="div" sx={{ display:{xs:'none',md:'flex'}, flexGrow: 1, typography: {xs: 'h2',sm:'h1'}}}>
                     {title}
                 </Typography>
+
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenMenu}
+                    color="inherit"
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchor}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    open={Boolean(anchor)}
+                    onClose={handleCloseMenu}
+                    sx={{
+                      display: { xs: 'block', md: 'none' },
+                    }}
+                  >
+                    <MenuItem onClick={handleCloseMenu} component={NavLink} to='searchPhotos'>
+                      <Typography variant="h3" textAlign="center">Buscador</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseMenu} component={NavLink} to='myPhotos'>
+                      <Typography variant="h3" textAlign="center">Mis fotos</Typography>
+                    </MenuItem>
+                  </Menu>
+                </Box>
                 { 
-                    location.pathname === '/modulo3/myPhotos' &&
+                    location.pathname === '/myPhotos' &&
                     (
-                      <Hidden mdUp>
-                        <Search>
+                        <Search sx={{display:{xs:'flex',md:'none'}}}>
                             <SearchIconWrapper>
                                 <SearchOutlined />
                             </SearchIconWrapper>
@@ -99,12 +147,10 @@ export const Header = () => {
                             onChange={(event) => updateQuery(event.target.value)}
                             />
                         </Search>
-                      </Hidden>
                     )
                 
                 }
-                <Hidden mdDown>
-                  <Box sx={{display: 'flex', height:'64px'}}>
+                  <Box sx={{display: {xs:'none',md:'flex'}, height:'64px'}}>
                     <NavItem LinkComponent={NavLink} to="searchPhotos">
                       <Typography variant="h2">Search Photos</Typography>
                     </NavItem>
@@ -112,9 +158,10 @@ export const Header = () => {
                       <Typography variant="h2">My Photos</Typography>
                     </NavItem>
                   </Box>
-                </Hidden>
-                
-            </Toolbar>
+              </Toolbar>
+
+            </Container>
+            
         </AppBar>
     )
 }
