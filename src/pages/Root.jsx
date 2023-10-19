@@ -1,4 +1,3 @@
-import { TabNavigation } from "../components/TabNavigation"
 import { Header } from "../components/Header"
 import { Outlet } from "react-router-dom"
 import './Root.css'
@@ -17,9 +16,6 @@ export const Root = () => {
             <div className="main-content">
                 <Outlet />
             </div>
-            <Hidden mdUp>
-                <TabNavigation />
-            </Hidden>
             <Hidden mdDown>
                 <Footer />
             </Hidden>
