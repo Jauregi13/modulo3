@@ -227,12 +227,12 @@ export const MyPhotos = () => {
     return (
         <>
 
-        <Box sx={{display:'flex'}}>
+        <Box sx={{display:'flex', justifyContent:'center'}}>
             <Search sx={{display:{xs:'none',md:'flex'},mr: {md:'3em'},mt:'1.5em', ml:'1.5em', mb:'2.5em', width:{xs: '80%',sm:'70%',md:'40%'}, height:'3.5em'}} onChange={(event) => updateQuery(event.target.value)} placeholder='Search Description...' name='search'/>
             
             <Box sx={{backgroundColor:'#FFFFFF', width:{xs:'80%',md:'50%',lg:'33em'}, borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex', justifyContent:'center', mr:{md:'auto'},ml:{md:'auto'}, mb:{md:'2em'},mt:{xs:'2em', md:'1.5em'}, pt:'1em',pb:'1em'}}>
 
-                <FormControl sx={{minWidth:'200px', mr:'2em'}}>
+                <FormControl sx={{width:'40%', mr:'2em'}}>
                     <InputLabel id="order_type">Ordenar por</InputLabel>
                     <Select label='Ordenar por' labelId="order_type" onChange={handleOrderType} value={order.orderType}>
                         <MenuItem value="none">Sin ordenar</MenuItem>
@@ -243,7 +243,7 @@ export const MyPhotos = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{minWidth:'200px'}} disabled={orderModeDisabled}>
+                <FormControl sx={{width:'40%'}} disabled={orderModeDisabled}>
                     <InputLabel id="order_mode">Modo de ordenación</InputLabel>
                     <Select label='Modo de ordenación' labelId="order_mode" value={order.orderMode} onChange={handleOrderMode}> 
                         <MenuItem value="none">Sin elegir</MenuItem>
