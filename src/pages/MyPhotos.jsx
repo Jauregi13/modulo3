@@ -1,5 +1,4 @@
-import { Backdrop, CircularProgress, Container, Stack, Pagination, Grid, Hidden } from "@mui/material"
-import { OrderBy } from "../components/OrderBy"
+import { Backdrop, CircularProgress, Container, Stack, Pagination, Grid, Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 import Search from '../components/SearchInput';
 import { useDispatch, useSelector } from "react-redux"
@@ -29,15 +28,12 @@ export const MyPhotos = () => {
     const [page,setPage] = useState(1)
     const [imagesPerPage,setImagesPerPage] = useState(3)
     
-    const [iconHeight, setIconHeight] = useState(<UnfoldMore/>)
-    const [iconWidth, setIconWidth] = useState(<UnfoldMore/>)
-    const [iconLikes, setIconLikes] = useState(<UnfoldMore/>)
-    const [iconDate, setIconDate] = useState(<UnfoldMore/>)
     const [order,setOrder] = useState({
         ordered: false,
-        orderType: null,
-        orderMode: null
+        orderType: 'none',
+        orderMode: 'none'
     })
+    const [orderModeDisabled,setOrderModeDisabled] = useState(true)
 
     const openEditModal = (image) => {
 
@@ -105,143 +101,31 @@ export const MyPhotos = () => {
         
     }
 
-    const handleOrderBy = (type) => {
+    const handleOrderType = (event) => {
+
         
-
-        switch (type) {
-            case 'height':
-
-                setIconWidth(<UnfoldMore />)
-                setIconLikes(<UnfoldMore />)
-                setIconDate(<UnfoldMore />)
-
-                if(iconHeight.type === UnfoldMore){
-                    setIconHeight(<ExpandMore />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'height',
-                        orderMode: 'desc'
-                    })
-                    
-                }
-                else if(iconHeight.type === ExpandMore){
-                    setIconHeight(<ExpandLess />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'height',
-                        orderMode: 'asc'
-                    })
-                }
-                else {
-                    setIconHeight(<UnfoldMore />)
-                    setOrder({
-                        ordered: false,
-                        orderType: null,
-                        orderMode: null
-                    })
-
-                }
-                break;
-            
-            case 'width':
-
-                setIconHeight(<UnfoldMore />)
-                setIconLikes(<UnfoldMore />)
-                setIconDate(<UnfoldMore />)
-
-                if(iconWidth.type === UnfoldMore){
-                    setIconWidth(<ExpandMore />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'width',
-                        orderMode: 'desc'
-                    })
-                }
-                else if(iconWidth.type === ExpandMore){
-                    setIconWidth(<ExpandLess />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'width',
-                        orderMode: 'asc'
-                    })
-                }
-                else {
-                    setIconWidth(<UnfoldMore />)
-                    setOrder({
-                        ordered: false,
-                        orderType: null,
-                        orderMode: null
-                    })
-                }
-                break;
-        
-            case 'likes':
-
-                setIconWidth(<UnfoldMore />)
-                setIconHeight(<UnfoldMore />)
-                setIconDate(<UnfoldMore />)
-
-
-                if(iconLikes.type === UnfoldMore){
-                    setIconLikes(<ExpandMore />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'likes',
-                        orderMode: 'desc'
-                    })
-                }
-                else if(iconLikes.type === ExpandMore){
-                    setIconLikes(<ExpandLess />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'likes',
-                        orderMode: 'asc'
-                    })
-                }
-                else {
-                    setIconLikes(<UnfoldMore />)
-                    setOrder({
-                        ordered: false,
-                        orderType: null,
-                        orderMode: null
-                    })
-                }
-                break;
-            
-                case 'date':
-
-                setIconWidth(<UnfoldMore />)
-                setIconHeight(<UnfoldMore />)
-                setIconLikes(<UnfoldMore />)
-
-                if(iconDate.type === UnfoldMore){
-                    setIconDate(<ExpandMore />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'date',
-                        orderMode: 'desc'
-                    })
-                }
-                else if(iconDate.type === ExpandMore){
-                    setIconDate(<ExpandLess />)
-                    setOrder({
-                        ordered: true,
-                        orderType: 'date',
-                        orderMode: 'asc'
-                    })
-                }
-                else {
-                    setIconDate(<UnfoldMore />)
-                    setOrder({
-                        ordered: false,
-                        orderType: null,
-                        orderMode: null
-                    })
-                }
-                break;
-            default:
-                break;
+        if(event.target.value === "none"){
+            setOrder({...order,ordered:false,orderType:'none',orderMode:'none'})
         }
+        else {
+            setOrder({...order,orderType: event.target.value})
+        }
+
+        setOrderModeDisabled(event.target.value === "none")
+
+         
+    }
+
+    const handleOrderMode = (event) => {
+
+        if(event.target.value === "none"){
+            setOrder({...order,ordered: false,orderMode:'none'})
+        }
+        else {
+            setOrder({...order,ordered: true, orderMode: event.target.value})
+        }
+        
+        
     }
 
     const orderDescImage = (a, b, type) => {
@@ -296,6 +180,8 @@ export const MyPhotos = () => {
             
         }
 
+        console.log(order);
+
         setImageFavourites(updatedImageFavourites)
 
     },[dispatch,getPhotos,query,order])
@@ -340,18 +226,35 @@ export const MyPhotos = () => {
 
     return (
         <>
+
+        <Box sx={{display:'flex', justifyContent:'center'}}>
+            <Search sx={{display:{xs:'none',md:'flex'},mr: {md:'3em'},mt:'1.5em', ml:'1.5em', mb:'2.5em', width:{xs: '80%',sm:'70%',md:'40%'}, height:'3.5em'}} onChange={(event) => updateQuery(event.target.value)} placeholder='Search Description...' name='search'/>
+            
+            <Box sx={{backgroundColor:'#FFFFFF', width:{xs:'80%',md:'50%',lg:'33em'}, borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex', justifyContent:'center', mr:{md:'auto'},ml:{md:'auto'}, mb:{md:'2em'},mt:{xs:'2em', md:'1.5em'}, pt:'1em',pb:'1em'}}>
+
+                <FormControl sx={{width:'40%', mr:'2em'}}>
+                    <InputLabel id="order_type">Ordenar por</InputLabel>
+                    <Select label='Ordenar por' labelId="order_type" onChange={handleOrderType} value={order.orderType}>
+                        <MenuItem value="none">Sin ordenar</MenuItem>
+                        <MenuItem value="height">Height</MenuItem>
+                        <MenuItem value="width">Width</MenuItem>
+                        <MenuItem value="likes">Likes</MenuItem>
+                        <MenuItem value="date">Fecha</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <FormControl sx={{width:'40%'}} disabled={orderModeDisabled}>
+                    <InputLabel id="order_mode">Modo de ordenación</InputLabel>
+                    <Select label='Modo de ordenación' labelId="order_mode" value={order.orderMode} onChange={handleOrderMode}> 
+                        <MenuItem value="none">Sin elegir</MenuItem>
+                        <MenuItem value="asc">Ascendente</MenuItem>
+                        <MenuItem value="desc">Descendente</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        </Box>
         
-        <Hidden mdDown>
-            <Search sx={{marginTop:'1.5em', marginLeft:'1.5em', marginBottom:'2.5em', width:{xs: '80%',sm:'70%',md:'50%'}}} onChange={(event) => updateQuery(event.target.value)} placeholder='Search Description...' name='search'/>
-        </Hidden>
-         
         
-        <Container sx={{backgroundColor:'#FFFFFF', width:{xs:'80%',md:'50%',lg:'33em'}, borderRadius:'10px', boxShadow:'0 4px 10px 0 #878282', display:'flex', marginBottom:{md:'4em'},marginTop:{xs:'2em'}}}>
-            <OrderBy title='Height' onClick={() => handleOrderBy('height')} icon={iconHeight}/>
-            <OrderBy title='Width' onClick={() =>handleOrderBy('width')} icon={iconWidth}/>
-            <OrderBy title='Likes' onClick={() =>handleOrderBy('likes')} icon={iconLikes}/>
-            <OrderBy title='Date' onClick={() => handleOrderBy('date')} icon={iconDate}/>
-        </Container>
 
         <Container sx={{width: {xs:'80%',md:'100%'} , marginTop: '1em'}}>
 
