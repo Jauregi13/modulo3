@@ -8,9 +8,18 @@ const CardElement = styled(Card)(({theme}) =>({
     flexDirection: 'column',
     height: '15em',
     marginBottom:'2em',
+    position:'relative',
 
     [theme.breakpoints.up('md')]:{
         height:'20em'
+    },
+
+    '&:hover .MuiCardMedia-root': {
+        filter: 'brightness(0.5)'
+    },
+
+    '&:hover .MuiCardHeader-root, &:hover .MuiCardContent-root,&:hover .MuiCardActions-root': {
+        display: 'flex',
     }
 
 
@@ -18,15 +27,31 @@ const CardElement = styled(Card)(({theme}) =>({
 
 const CardHeaderStyled = styled(CardHeader)(({theme}) => ({
 
-    height: '10%',
+    zIndex: '1',
+    display:'none',
+
+    '& .MuiCardHeader-content': {
+        color:'#FFFFFF'
+    },
+
+    '& .MuiCardHeader-content h3': {
+        marginBottom: '1em'
+    },
 
     '& .MuiIconButton-root': {
         color: theme.palette.error.main
     },
-    '& h3':{
-        height:'2em',
-        overflow:'auto',
+
+    '& .MuiIconButton-root:hover': {
+        color: '#FFFFFF'
     }
+}))
+
+const CardMediaStyled = styled(CardMedia)(() => ({
+
+    height:'100%',
+    position:'absolute',
+
 }))
 
 
@@ -34,30 +59,58 @@ const CardHeaderStyled = styled(CardHeader)(({theme}) => ({
 
 const GridStyled = styled(Grid)(() => ({
 
+    position: 'absolute',
+    bottom: '20%',
+
     '& .MuiGrid-item': {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'flex-end'
     },
 
     '& .MuiTypography-h4SecondRegular': {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: '0.2em'
+    },
+
+    '& .margin-right-width': {
+        marginRight:'0.5em'
+    },
+
+    '& .margin-right-height': {
+        marginRight:'0.2em'
     }
    
 }))
 
 const CardActionsStyled = styled(CardActions)(({theme}) => ({
 
+    position: 'absolute',
+    right: '0',
+    bottom: '1em',
     justifyContent: 'flex-end',
     padding: '0',
     height: '10%',
+    zIndex: '1',
+    display:'none',
+
+    '& .edit-photo:hover':{
+        backgroundColor: '#FFFFFF',
+        color: '#000000'
+    },
 
     '& .download-blue': {
         color: theme.palette.primary.light
     },
 
+    '& .download-blue:hover': {
+        backgroundColor: '#FFFFFF'
+    },
+
     '& >:not(:first-of-type)':{
-        marginLeft: '0'
+        marginLeft: '0',
+        marginRight: '0.3em'
     }
 
 }))
@@ -77,19 +130,18 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditMod
                 }
             />
 
-            <CardMedia 
-                sx={{height:'50%'}}
+            <CardMediaStyled
                 component='img'
                 image={img}
             />
-            <CardContent sx={{padding: '8px', height:'10%'}}>
+            <CardContent sx={{padding: '8px', height:'50%', zIndex:'1', display:'none', color:'#FFFFFF'}}>
                 <GridStyled container spacing={1}>
                     <Grid item xs={4}>
-                        <HeightOutlined/>
+                        <HeightOutlined className="margin-right-height"/>
                         <Typography variant="h4SecondRegular">{height}</Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <CompareArrows/>
+                        <CompareArrows className="margin-right-width"/>
                         <Typography variant="h4SecondRegular">{width}</Typography>
                     </Grid>
                     <Grid item xs={4}>
@@ -100,7 +152,7 @@ export const CardPhotoWithInfo = ({title,img,height,width,likes,date,openEditMod
                 
             </CardContent>
             <CardActionsStyled>
-                <IconButton onClick={openEditModal}>
+                <IconButton onClick={openEditModal} sx={{color:'#FFFFFF'}} className="edit-photo">
                     <EditOutlined/>
                 </IconButton>
                 <IconButton className="download-blue" onClick={downloadImage}>
