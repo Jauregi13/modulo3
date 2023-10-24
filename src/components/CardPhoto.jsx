@@ -9,22 +9,48 @@ const CardElement = styled(Card)(() => ({
     borderRadius: '20px',
     display: 'flex',
     flexDirection: 'column',
-    height: '12em'
+    height: '12em',
+    position:'relative',
+
+    '&:hover .MuiCardMedia-root': {
+        filter: 'brightness(0.5)'
+    },
+
+    '&:hover .MuiCardHeader-root': {
+        display: 'flex'
+    }
 
 }))
 
 const CardTitle = styled(CardHeader)(({theme}) => ({
 
     height: '30%',
+    display: 'none',
+    zIndex: '1',
+    color: '#FFFFFF',
+
+    '& .MuiCardHeader-action': {
+        marginTop: '0'
+    },
 
     '& .MuiIconButton-root':{
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
+        
+    },
+
+    '& .MuiIconButton-root:hover': {
+        color: '#FFFFFF'
+    },
+
+    '& svg': {
+        fontSize: '2rem'
     }
 }))
 
 const CardImage = styled(CardMedia)(() =>({
 
-    height: '70%'
+    height: '100%',
+    position: 'absolute'
 }))
 
 export default function CardPhoto({sx, title,image, addPhoto}){
