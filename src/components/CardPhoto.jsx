@@ -24,10 +24,15 @@ const CardElement = styled(Card)(() => ({
 
 const CardTitle = styled(CardHeader)(({theme}) => ({
 
-    height: '30%',
+    height: '50%',
     display: 'none',
     zIndex: '1',
     color: '#FFFFFF',
+    alignItems: 'flex-start',
+
+    '& .MuiCardHeader-content': {
+        paddingTop: '0.5em'
+    },
 
     '& .MuiCardHeader-action': {
         marginTop: '0'

@@ -7,8 +7,6 @@ import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { ModalDialog } from "../components/ModalDialog"
 import { useSearchContext } from "../components/SearchContext"
-import { ExpandLess, ExpandMore, UnfoldMore } from "@mui/icons-material"
-
 
 
 export const MyPhotos = () => {
@@ -157,6 +155,13 @@ export const MyPhotos = () => {
 
     useEffect(() => {
 
+        if(window.innerWidth <= 899.5){
+            setImagesPerPage(2)
+        }
+        else {
+            setImagesPerPage(3)
+        }
+
         let updatedImageFavourites = [...imageFavourites]
 
         if(query === ''){
@@ -180,8 +185,6 @@ export const MyPhotos = () => {
             
         }
 
-        console.log(order);
-
         setImageFavourites(updatedImageFavourites)
 
     },[dispatch,getPhotos,query,order])
@@ -198,19 +201,9 @@ export const MyPhotos = () => {
         setPage(newPage)
     }
 
-   
-    window.addEventListener('load',()=> {
-        if(window.innerWidth <= 899.5){
-            setImagesPerPage(2)
-        }
-        else {
-            setImagesPerPage(3)
-        }
-    })
-
     
     window.addEventListener('resize',() => {
-        console.log(window.innerWidth);
+        
         if(window.innerWidth <= 899.5){
             setImagesPerPage(2)
         }

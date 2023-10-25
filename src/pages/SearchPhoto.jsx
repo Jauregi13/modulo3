@@ -51,6 +51,13 @@ export const SearchPhoto = () => {
 
     useEffect(() => {
 
+        if(window.innerWidth <= 899.5){
+            setImagesPerPage(4)
+        }
+        else {
+            setImagesPerPage(6)
+        }
+
         let loading
 
         switch (searchStatus) {
@@ -102,15 +109,6 @@ export const SearchPhoto = () => {
         }
 
     },[dispatch,searchImages,searchStatus])
-
-    window.addEventListener('load',()=> {
-        if(window.innerWidth <= 899.5){
-            setImagesPerPage(4)
-        }
-        else {
-            setImagesPerPage(6)
-        }
-    })
 
     
     window.addEventListener('resize',() => {
