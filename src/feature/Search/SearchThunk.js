@@ -8,15 +8,28 @@ const unsplash = createApi({
 
 export const getPhotosThunk = createAsyncThunk("search/getPhotos", async (query) => {
 
-    const search = await unsplash.search.getPhotos({
-        query: query,
-        perPage: 30
-    })
+    let search
 
-    const response = search.response
+    let response
 
+    if(query !== ''){
 
-    const images = response.results.map(image => ({
+        search = await unsplash.search.getPhotos({
+            query: query,
+            perPage: 28
+        })
+
+        response = search.response.results
+    }
+    else {
+        search = await unsplash.photos.getRandom({
+            count: 28
+        })
+
+        response = search.response
+    }
+
+    const images = response.map(image => ({
 
         name: image.alt_description,
         width: image.width,
