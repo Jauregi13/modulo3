@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { searchSlice } from "../feature/Search/SearchSlice";
-import { favouriteSlice } from "../feature/favouriteSlice";
+import { searchSlice } from "../features/search/SearchSlice";
+import { favouriteSlice } from "../features/favourite/favouriteSlice";
 
 
 export const store = configureStore({

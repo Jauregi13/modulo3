@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createApi } from "unsplash-js";
 
+
 const unsplash = createApi({
-    accessKey: 'vL7Gye9SqKGRMh98OV6GPyxOL44F70h4da8O2SXf2O8'
+    accessKey: import.meta.env.VITE_UNSPLASH_KEY
 })
 
 
