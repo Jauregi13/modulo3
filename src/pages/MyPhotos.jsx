@@ -2,7 +2,7 @@ import { Backdrop, CircularProgress, Container, Stack, Pagination, Grid, Box, Fo
 import { CardPhotoWithInfo } from "../components/CardPhotoWithInfo"
 import Search from '../components/SearchInput';
 import { useDispatch, useSelector } from "react-redux"
-import { editPhoto, getFavouritePhotos, removePhoto } from "../feature/favouriteSlice" 
+import { editPhoto, getFavouritePhotos, removePhoto } from "../features/favourite/favouriteSlice" 
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { ModalDialog } from "../components/ModalDialog"
@@ -227,7 +227,7 @@ export const MyPhotos = () => {
 
                 <FormControl sx={{width:'40%', mr:'2em'}}>
                     <InputLabel id="order_type">Ordenar por</InputLabel>
-                    <Select label='Ordenar por' labelId="order_type" onChange={handleOrderType} value={order.orderType}>
+                    <Select label='Ordenar por' labelId="order_type" onChange={handleOrderType} value={order.orderType} className="changeFont">
                         <MenuItem value="none">Sin ordenar</MenuItem>
                         <MenuItem value="height">Height</MenuItem>
                         <MenuItem value="width">Width</MenuItem>

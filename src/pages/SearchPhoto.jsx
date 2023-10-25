@@ -1,18 +1,17 @@
 import './SearchPhoto.css';
 import Search from '../components/SearchInput';
 import CardPhoto from '../components/CardPhoto';
-import { Alert, Button, CircularProgress, Grid, Pagination, Stack, Typography , useTheme} from '@mui/material';
+import { CircularProgress, Grid, Pagination, Stack} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPhotosThunk } from '../feature/Search/SearchThunk';
+import { getPhotosThunk } from '../features/search/SearchThunk';
 import { useEffect, useState } from 'react';
-import { getImages, getSearchError, getSearchStatus } from '../feature/Search/SearchSlice';
+import { getImages, getSearchError, getSearchStatus } from '../features/search/SearchSlice';
 import { ModalDialog } from "../components/ModalDialog"
 import { AlertMessage } from '../components/AlertMessage';
-import { addPhoto } from '../feature/favouriteSlice';
+import { addPhoto } from '../features/favourite/favouriteSlice';
 
 export const SearchPhoto = () => {
     
-    const theme = useTheme()
     const dispatch = useDispatch()
     const searchImages = useSelector(getImages)
     const searchStatus = useSelector(getSearchStatus)

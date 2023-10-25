@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, styled, InputBase, alpha, Container, Box, Button, IconButton,Menu,MenuItem } from "@mui/material"
 import { SearchOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
-import { Link, NavLink, useLocation } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { useSearchContext } from "./SearchContext"
 import MenuIcon from '@mui/icons-material/Menu';
 
