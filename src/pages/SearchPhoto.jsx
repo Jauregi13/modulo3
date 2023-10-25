@@ -173,7 +173,7 @@ export const SearchPhoto = () => {
 
 
         <ModalDialog 
-            title='Add Photo'
+            title='Añadir imagen'
             text='Quieres añadir esta imagen a favoritos?'
             operation={() => handleAddPhoto()}
             open={openAdd}

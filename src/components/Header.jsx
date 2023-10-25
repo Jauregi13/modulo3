@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, styled, InputBase, alpha, Container, Box, Button, IconButton,Menu,MenuItem } from "@mui/material"
 import { SearchOutlined } from "@mui/icons-material"
 import { useEffect, useState } from "react"
-import { NavLink, useLocation } from "react-router-dom"
+import { Link, NavLink, useLocation } from "react-router-dom"
 import { useSearchContext } from "./SearchContext"
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -92,8 +92,8 @@ export const Header = () => {
         <AppBar position="static" className="header">
             <Container maxWidth='xl'>
               <Toolbar className="header__content">
-                <Typography variant="h2" noWrap component="div" sx={{ display:{xs:'none',md:'flex'}, flexGrow: 1, typography: {xs: 'h2',sm:'h1'}}}>
-                    {title}
+                <Typography variant="h2" component={NavLink} to='searchPhotos' noWrap sx={{ display:{xs:'none',md:'flex'}, flexGrow: 1, typography: {xs: 'h2',sm:'h1'}, textDecoration:'none', color:'#FFFFFF'}}>
+                    Search Photos
                 </Typography>
 
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -152,10 +152,10 @@ export const Header = () => {
                 }
                   <Box sx={{display: {xs:'none',md:'flex'}, height:'64px'}}>
                     <NavItem LinkComponent={NavLink} to="searchPhotos">
-                      <Typography variant="h2">Search Photos</Typography>
+                      <Typography variant="h2">Buscador</Typography>
                     </NavItem>
                     <NavItem LinkComponent={NavLink} to="myPhotos">
-                      <Typography variant="h2">My Photos</Typography>
+                      <Typography variant="h2">Mis fotos</Typography>
                     </NavItem>
                   </Box>
               </Toolbar>

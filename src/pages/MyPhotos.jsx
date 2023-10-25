@@ -286,7 +286,7 @@ export const MyPhotos = () => {
         </Container>
 
         <ModalDialog 
-            title='Edit name photo'
+            title='Edición del nombre'
             text='Escribe la nueva descripción de la imagen'
             setNewName={setNewName}
             operation={() => handleEditPhoto()}
@@ -297,7 +297,7 @@ export const MyPhotos = () => {
         />
 
         <ModalDialog 
-            title='Remove photo'
+            title='Eliminar imagen'
             text='Estás seguro que quieres eliminar esta foto de favoritos?'
             operation={() => handleRemovePhoto()}
             open={openRemove}
